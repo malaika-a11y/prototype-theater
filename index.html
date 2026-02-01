@@ -3,18 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Idea Lab</title>
-
+  <title>Prototype Theater | Ignited Word</title>
   <style>
     :root{
-      /* THEME (brand these) */
+      /* IW BRAND */
+      --accent:#f05126;
+      --font: "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+      /* THEME */
       --bg:#0b0f14;
-      --panel:#111826;
-      --panel2:#0f1622;
-      --ink:#e8eef8;
+      --panel:#0f1622;
+      --panel2:#111a28;
+      --ink:#e9eef7;
       --muted:#a9b6c7;
       --line:#233246;
-      --accent:#7dd3fc;
       --good:#86efac;
       --warn:#fde68a;
       --bad:#fca5a5;
@@ -26,104 +28,75 @@
     *{ box-sizing:border-box; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 30% -10%, rgba(125,211,252,.15), transparent 60%),
-                  radial-gradient(1000px 700px at 90% 10%, rgba(134,239,172,.10), transparent 55%),
-                  var(--bg);
+      font-family: var(--font);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(240,81,38,.17), transparent 60%),
+        radial-gradient(900px 700px at 90% 15%, rgba(240,81,38,.10), transparent 55%),
+        var(--bg);
       color:var(--ink);
     }
 
     header.site{
-      padding:18px 18px 10px;
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
-    }
-    .title{
+      padding: 18px 18px 10px;
       display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
       gap:10px;
-      align-items:baseline;
       flex-wrap:wrap;
     }
-    h1{
-      font-size:18px;
-      margin:0;
-      letter-spacing:.2px;
+    .brand{
+      display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;
     }
-    .sub{
-      color:var(--muted);
-      font-size:13px;
+    h1{ margin:0; font-size:18px; letter-spacing:.2px; }
+    .sub{ color:var(--muted); font-size:13px; }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(240,81,38,.45);
+      background: rgba(240,81,38,.10);
+      color: var(--ink);
+      font-size:12px;
+      white-space:nowrap;
     }
 
     .wrap{
-      max-width:1200px;
-      margin:0 auto;
+      max-width: 1240px;
+      margin: 0 auto;
       padding: 10px 18px 24px;
       display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:14px;
+      grid-template-columns: 360px 1fr 360px;
+      gap: 14px;
+      align-items:start;
     }
-    @media (max-width: 980px){
+    @media (max-width: 1120px){
       .wrap{ grid-template-columns: 1fr; }
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(17,24,38,.9), rgba(15,22,34,.9));
+      background: linear-gradient(180deg, rgba(17,26,40,.92), rgba(15,22,34,.92));
       border:1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-
     .card header{
-      padding:12px 14px;
+      padding: 12px 14px;
       border-bottom:1px solid var(--line);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-    }
-    .label{
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .body{
-      padding:14px;
-      display:grid;
-      gap:12px;
-    }
-
-    .row{
-      display:flex;
-      gap:10px;
       flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
     }
-    .group{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    textarea{
-      width:100%;
-      min-height: 220px;
-      resize: vertical;
-      border:1px solid var(--line);
-      background: rgba(5,10,16,.55);
-      color:var(--ink);
-      border-radius: 12px;
-      padding:12px;
-      outline:none;
-      line-height:1.45;
-      font-size:14px;
-    }
-    textarea:focus{
-      border-color: rgba(125,211,252,.55);
-      box-shadow: 0 0 0 3px rgba(125,211,252,.12);
-    }
+    .label{ font-size:13px; color:var(--muted); }
+    .body{ padding: 14px; display:grid; gap:12px; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+    .group{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
 
     button{
       border:1px solid var(--line);
@@ -136,128 +109,34 @@
       transition: transform .06s ease, border-color .2s ease, background .2s ease;
       user-select:none;
     }
-    button:hover{ border-color: rgba(125,211,252,.55); }
+    button:hover{ border-color: rgba(240,81,38,.55); }
     button:active{ transform: translateY(1px); }
-
     button.primary{
-      border-color: rgba(125,211,252,.6);
-      background: rgba(125,211,252,.12);
-    }
-    button.ghost{ background: transparent; }
-    button.danger{
-      border-color: rgba(252,165,165,.55);
-      background: rgba(252,165,165,.10);
+      border-color: rgba(240,81,38,.65);
+      background: rgba(240,81,38,.14);
     }
     button.good{
       border-color: rgba(134,239,172,.55);
       background: rgba(134,239,172,.10);
     }
+    button.danger{
+      border-color: rgba(252,165,165,.55);
+      background: rgba(252,165,165,.10);
+    }
+    button.ghost{ background: transparent; }
 
     .pill{
       display:inline-flex;
       align-items:center;
-      gap:6px;
+      gap:8px;
       border:1px solid var(--line);
       border-radius:999px;
       padding:6px 10px;
       font-size:12px;
       color:var(--muted);
       background: rgba(5,10,16,.35);
+      white-space:nowrap;
     }
-    .tag{
-      font-size:11px;
-      color:var(--muted);
-      border:1px solid var(--line);
-      padding:4px 8px;
-      border-radius:999px;
-      background: rgba(10,16,26,.35);
-    }
-    .muted{ color:var(--muted); font-size:12px; }
-
-    select, input[type="range"]{ accent-color: var(--accent); }
-    select{
-      border:1px solid var(--line);
-      background: rgba(5,10,16,.35);
-      color:var(--ink);
-      padding:7px 8px;
-      border-radius: 12px;
-      font-size:13px;
-      outline:none;
-    }
-
-    .constraints{
-      display:grid;
-      gap:10px;
-      padding:12px;
-      border:1px dashed rgba(35,50,70,.9);
-      border-radius: 14px;
-      background: rgba(5,10,16,.25);
-    }
-    .constraints .c-row{
-      display:grid;
-      grid-template-columns: 120px 1fr;
-      gap:10px;
-      align-items:center;
-    }
-    .constraints label{
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .surface{
-      padding:12px;
-      border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(5,10,16,.35);
-      min-height: 220px;
-      line-height:1.45;
-      font-size:14px;
-      white-space: pre-wrap;
-    }
-
-    .split{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 980px){
-      .split{ grid-template-columns: 1fr; }
-    }
-
-    .list{ display:grid; gap:10px; }
-
-    .item{
-      border:1px solid var(--line);
-      border-radius: 14px;
-      padding:10px;
-      background: rgba(5,10,16,.35);
-      display:grid;
-      gap:8px;
-    }
-    .item .top{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    .item .snippet{
-      color: var(--ink);
-      font-size:13px;
-      line-height:1.35;
-      opacity:.95;
-      max-height: 3.9em;
-      overflow:hidden;
-      white-space: pre-wrap;
-    }
-    .item .actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-
     .kbd{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 11px;
@@ -266,6 +145,169 @@
       border: 1px solid var(--line);
       background: rgba(5,10,16,.35);
       color: var(--muted);
+    }
+    .muted{ color:var(--muted); font-size:12px; }
+
+    input[type="text"], textarea, select{
+      width: 100%;
+      border:1px solid var(--line);
+      background: rgba(5,10,16,.45);
+      color:var(--ink);
+      border-radius: 12px;
+      padding:10px 10px;
+      outline:none;
+      font-size:13px;
+    }
+    textarea{ min-height: 120px; resize: vertical; line-height:1.4; }
+    input[type="text"]:focus, textarea:focus, select:focus{
+      border-color: rgba(240,81,38,.55);
+      box-shadow: 0 0 0 3px rgba(240,81,38,.12);
+    }
+
+    .seg{
+      display:flex;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      overflow:hidden;
+      background: rgba(5,10,16,.35);
+    }
+    .seg button{
+      border:none;
+      border-right:1px solid var(--line);
+      border-radius:0;
+      background: transparent;
+      padding:10px 12px;
+      font-size:13px;
+    }
+    .seg button:last-child{ border-right:none; }
+    .seg button.active{
+      background: rgba(240,81,38,.14);
+      color: var(--ink);
+    }
+
+    .canvasWrap{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      overflow:hidden;
+      background: rgba(5,10,16,.35);
+    }
+    .canvasTop{
+      padding: 10px 12px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      background: rgba(5,10,16,.20);
+    }
+    .canvas{
+      padding: 14px;
+      min-height: 520px;
+    }
+    @media (max-width: 1120px){
+      .canvas{ min-height: 520px; }
+    }
+    .hint{
+      padding: 10px 12px;
+      border-top:1px solid var(--line);
+      background: rgba(5,10,16,.20);
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.35;
+    }
+
+    .tileGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .tile{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;
+      background: rgba(5,10,16,.35);
+      display:grid;
+      gap:8px;
+    }
+    .tileTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tag{
+      font-size:11px;
+      color:var(--muted);
+      border:1px solid var(--line);
+      padding:4px 8px;
+      border-radius:999px;
+      background: rgba(10,16,26,.35);
+      white-space:nowrap;
+    }
+
+    /* Canvas component styles */
+    .pt-card{
+      border:1px solid rgba(35,50,70,.95);
+      border-radius: 16px;
+      background: rgba(17,26,40,.55);
+      padding: 14px;
+      display:grid;
+      gap:10px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .pt-title{ font-size:18px; margin:0; }
+    .pt-text{ color:var(--muted); font-size:13px; line-height:1.4; margin:0; }
+    .pt-actions{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-start; }
+    .pt-actions button{
+      border-color: rgba(240,81,38,.45);
+    }
+    .pt-actions button.primary{
+      border-color: rgba(240,81,38,.7);
+    }
+    .pt-field{
+      display:grid;
+      gap:6px;
+    }
+    .pt-label{
+      font-size:12px;
+      color: var(--muted);
+    }
+    .pt-input{
+      width:100%;
+      border:1px solid rgba(35,50,70,.95);
+      background: rgba(5,10,16,.45);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 10px 10px;
+      outline:none;
+      font-size:13px;
+    }
+    .pt-input:focus{
+      border-color: rgba(240,81,38,.55);
+      box-shadow: 0 0 0 3px rgba(240,81,38,.12);
+    }
+    .pt-alert{
+      border:1px solid rgba(240,81,38,.45);
+      background: rgba(240,81,38,.10);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size:13px;
+      line-height:1.35;
+    }
+    .pt-hr{
+      border:none;
+      border-top:1px solid rgba(35,50,70,.95);
+      margin: 6px 0;
+    }
+    .pt-stepper{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
     .toast{
@@ -283,39 +325,44 @@
       transform: translateY(8px);
       transition: opacity .2s ease, transform .2s ease;
       pointer-events:none;
-      max-width: 420px;
+      max-width: 460px;
       white-space: pre-wrap;
     }
-    .toast.show{
-      opacity: 1;
-      transform: translateY(0);
+    .toast.show{ opacity:1; transform: translateY(0); }
+
+    .mini{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
     }
 
-    .qblock{
-      display:grid;
-      gap:8px;
-      margin-bottom:14px;
-      padding-bottom:12px;
-      border-bottom:1px dashed rgba(35,50,70,.9);
+    .dangerText{ color: var(--bad); }
+    .goodText{ color: var(--good); }
+    .warnText{ color: var(--warn); }
+
+    /* Small screens: keep it readable */
+    @media (max-width: 520px){
+      .wrap{ padding: 10px 12px 20px; }
+      header.site{ padding: 16px 12px 8px; }
     }
-    .qblock:last-child{ border-bottom:none; padding-bottom:0; }
-    .qtitle{ font-size:12px; color:var(--muted); }
-    .qtextarea{ min-height: 80px; }
   </style>
 </head>
-
 <body>
   <header class="site">
-    <div class="title">
-      <h1>Idea Lab</h1>
-      <div class="sub">A small studio for shaping ideas into selectable drafts. Local-only autosave. 🧪</div>
+    <div class="brand">
+      <h1>Prototype Theater</h1>
+      <div class="sub">Build mode → Play mode. Small prototypes, big learning. Local-only autosave. 🎭</div>
+    </div>
+    <div class="badge">
+      Ignited Word • Helvetica • <span style="color:var(--accent)">#f05126</span>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="card" aria-label="Idea Input">
+    <!-- LEFT: Builder -->
+    <section class="card" aria-label="Builder">
       <header>
-        <div class="label">1) Seed</div>
+        <div class="label">Builder</div>
         <div class="group">
           <span class="pill">Undo <span class="kbd">Ctrl</span>+<span class="kbd">Z</span></span>
           <span class="pill">Redo <span class="kbd">Ctrl</span>+<span class="kbd">Y</span></span>
@@ -323,114 +370,210 @@
       </header>
 
       <div class="body">
-        <div class="muted">
-          Write a rough idea. The tool helps you iterate without outsourcing your thinking.
+        <div class="seg" role="tablist" aria-label="Mode">
+          <button id="tabBuild" class="active" role="tab" aria-selected="true">Build</button>
+          <button id="tabPlay" role="tab" aria-selected="false">Play</button>
         </div>
 
-        <textarea id="seed" placeholder="Drop your messy idea here..."></textarea>
+        <div class="tile">
+          <div class="tileTop">
+            <div class="pill">Start point</div>
+            <span class="tag" id="flowMeta">0 screens</span>
+          </div>
+          <select id="startScreenSelect" aria-label="Start screen">
+            <option value="">(Create a screen)</option>
+          </select>
+          <div class="mini">Pick the first screen a user sees in Play mode.</div>
+        </div>
 
-        <div class="constraints" aria-label="Constraints">
+        <div class="tile">
+          <div class="tileTop">
+            <div class="pill">Add a screen</div>
+            <span class="tag">Fast build</span>
+          </div>
+          <input id="newScreenName" type="text" placeholder="Screen name (e.g., Welcome)" />
           <div class="row">
-            <div class="label">2) Constraints</div>
-            <div class="muted">These shape transforms and questions.</div>
+            <button id="btnAddScreen" class="primary">Add screen</button>
+            <button id="btnAddFromTemplate" class="ghost">Use template</button>
           </div>
-
-          <div class="c-row">
-            <label for="tone">Tone</label>
-            <select id="tone">
-              <option value="plain">Plainspoken</option>
-              <option value="warm">Warm</option>
-              <option value="bold">Bold</option>
-              <option value="playful">Playful</option>
-              <option value="formal">Formal</option>
-            </select>
-          </div>
-
-          <div class="c-row">
-            <label for="audience">Audience</label>
-            <select id="audience">
-              <option value="general">General</option>
-              <option value="teammate">Teammate</option>
-              <option value="client">Client</option>
-              <option value="funder">Funder</option>
-              <option value="expert">Expert</option>
-            </select>
-          </div>
-
-          <div class="c-row">
-            <label for="length">Length</label>
-            <div class="group" style="width:100%;">
-              <input id="length" type="range" min="0" max="100" value="40" style="width:100%;" />
-              <span id="lengthLabel" class="tag" aria-live="polite">~ medium</span>
-            </div>
+          <div class="mini">
+            Template makes a tiny flow you can edit. Great for starting, not finishing.
           </div>
         </div>
 
-        <div class="row">
-          <div class="group">
-            <button class="primary" id="btnClarify">Clarify</button>
-            <button id="btnCompress">Compress</button>
-            <button id="btnExpand">Expand with detail</button>
-            <button id="btnQuestions" class="ghost">Reflection questions</button>
+        <div class="tile">
+          <div class="tileTop">
+            <div class="pill">Components</div>
+            <span class="tag">Drop-in</span>
           </div>
           <div class="group">
-            <button id="btnCommit" class="good">Commit to history</button>
+            <button id="btnAddHeading">Heading</button>
+            <button id="btnAddText">Text</button>
+            <button id="btnAddInput">Input</button>
+            <button id="btnAddButton">Button</button>
+            <button id="btnAddAlert">Alert</button>
+            <button id="btnAddDivider" class="ghost">Divider</button>
+          </div>
+          <div class="mini">
+            Tip: add a Button, then set its <span class="kbd">Go to</span> target to connect screens.
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tileTop">
+            <div class="pill">Flow tools</div>
+            <span class="tag">Safe edits</span>
+          </div>
+          <div class="row">
+            <button id="btnDuplicateScreen" class="ghost">Duplicate screen</button>
+            <button id="btnDeleteScreen" class="danger">Delete screen</button>
+          </div>
+          <div class="row">
+            <button id="btnExport" class="primary">Export JSON</button>
+            <button id="btnImport" class="ghost">Import JSON</button>
             <button id="btnReset" class="danger">Reset</button>
+          </div>
+          <textarea id="ioBox" placeholder="Export appears here. Paste JSON here to import."></textarea>
+          <div class="mini">
+            Export/Import is how you share prototypes without needing accounts.
           </div>
         </div>
 
         <div class="row">
           <div class="muted" id="status">Autosave: on</div>
-          <div class="muted">Local: <span class="kbd">localStorage</span> only</div>
+          <div class="muted">Local: <span class="kbd">localStorage</span></div>
         </div>
       </div>
     </section>
 
-    <section class="card" aria-label="Output & Versions">
+    <!-- CENTER: Canvas -->
+    <section class="card" aria-label="Canvas">
       <header>
-        <div class="label">3) Studio surface</div>
+        <div class="label">Canvas</div>
         <div class="group">
-          <button id="btnPin" class="ghost">Pin current</button>
-          <button id="btnCopy" class="ghost">Copy</button>
-          <button id="btnExport" class="primary">Export bundle</button>
+          <span class="pill">Selected: <span id="selMeta" class="kbd">none</span></span>
+          <button id="btnSimPrev" class="ghost">◀</button>
+          <button id="btnSimNext" class="ghost">▶</button>
         </div>
       </header>
 
       <div class="body">
-        <div class="row">
-          <div class="pill" id="modePill">Mode: Draft</div>
-          <div class="muted" id="draftMeta">No transform yet.</div>
+        <div class="canvasWrap">
+          <div class="canvasTop">
+            <div class="group">
+              <span class="pill">Screen</span>
+              <select id="screenSelect" aria-label="Current screen"></select>
+            </div>
+            <div class="group">
+              <span class="pill" id="modePill">Mode: Build</span>
+              <span class="tag" id="playMeta">Not playing</span>
+            </div>
+          </div>
+
+          <div id="canvas" class="canvas" aria-label="Prototype canvas"></div>
+
+          <div class="hint" id="hint">
+            Build: click a component to edit it. Play: click buttons to navigate like a user.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Inspector + Simulation -->
+    <section class="card" aria-label="Inspector and Simulation">
+      <header>
+        <div class="label">Inspector</div>
+        <div class="group">
+          <button id="btnRunChecks" class="ghost">Run checks</button>
+          <button id="btnPinState" class="ghost">Snapshot note</button>
+        </div>
+      </header>
+
+      <div class="body">
+        <div class="tile">
+          <div class="tileTop">
+            <div class="pill">Selected component</div>
+            <span class="tag" id="selType">none</span>
+          </div>
+
+          <div id="inspectorEmpty" class="mini">
+            Select a component on the canvas to edit. In Play mode, selection is locked.
+          </div>
+
+          <div id="inspector" style="display:none; gap:10px;">
+            <div class="pt-field">
+              <div class="pt-label">Label / Text</div>
+              <input id="fieldText" class="pt-input" type="text" />
+            </div>
+
+            <div class="pt-field" id="fieldPlaceholderWrap" style="display:none;">
+              <div class="pt-label">Placeholder</div>
+              <input id="fieldPlaceholder" class="pt-input" type="text" />
+            </div>
+
+            <div class="pt-field" id="fieldAriaWrap" style="display:none;">
+              <div class="pt-label">ARIA label (accessibility)</div>
+              <input id="fieldAria" class="pt-input" type="text" placeholder="Describe the control" />
+            </div>
+
+            <div class="pt-field" id="fieldGoToWrap" style="display:none;">
+              <div class="pt-label">Go to (screen)</div>
+              <select id="fieldGoTo"></select>
+            </div>
+
+            <div class="row">
+              <button id="btnMoveUp" class="ghost">Move up</button>
+              <button id="btnMoveDown" class="ghost">Move down</button>
+              <button id="btnDeleteComponent" class="danger">Delete</button>
+            </div>
+
+            <div class="mini">
+              Good prototypes are editable. Great prototypes are undoable.
+            </div>
+          </div>
         </div>
 
-        <div id="surface" class="surface" role="region" aria-label="Studio surface"></div>
-
-        <div class="constraints" aria-label="Iteration note">
-          <div class="row">
-            <div class="label">Iteration note</div>
-            <div class="muted">Optional: why this version works.</div>
+        <div class="tile">
+          <div class="tileTop">
+            <div class="pill">Simulation</div>
+            <span class="tag" id="simStepTag">Step 0</span>
           </div>
-          <textarea id="note" class="qtextarea" placeholder="e.g., This draft clarifies the outcome and names a concrete test."></textarea>
-          <div class="row">
-            <div class="muted">Notes are saved with commits and pins.</div>
-            <button id="btnAttachNote" class="ghost">Attach note to current</button>
+
+          <div class="pt-stepper">
+            <div class="mini">
+              Play mode logs a simple journey (screen → action).
+            </div>
+            <div class="group">
+              <button id="btnStartPlay" class="primary">Start</button>
+              <button id="btnStopPlay" class="ghost">Stop</button>
+              <button id="btnClearLog" class="ghost">Clear</button>
+            </div>
+          </div>
+
+          <div id="simLog" class="mini" style="border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(5,10,16,.35);min-height:90px;white-space:pre-wrap;"></div>
+
+          <hr class="pt-hr"/>
+
+          <div class="tileTop">
+            <div class="pill">Scenario presets</div>
+            <span class="tag">Optional</span>
+          </div>
+          <div class="group">
+            <button id="btnScenarioHappy" class="ghost">Happy path</button>
+            <button id="btnScenarioError" class="ghost">Error state</button>
+            <button id="btnScenarioAlt" class="ghost">Alternate route</button>
+          </div>
+          <div class="mini">
+            Scenarios are just guided clicks, useful for demos and edge cases.
           </div>
         </div>
 
-        <div class="split">
-          <div>
-            <div class="row">
-              <div class="pill">History</div>
-              <div class="muted">Load any version.</div>
-            </div>
-            <div id="historyList" class="list" aria-label="History versions"></div>
+        <div class="tile">
+          <div class="tileTop">
+            <div class="pill">Checks</div>
+            <span class="tag">A11y + logic</span>
           </div>
-          <div>
-            <div class="row">
-              <div class="pill">Pins</div>
-              <div class="muted">Keepers.</div>
-            </div>
-            <div id="pinList" class="list" aria-label="Pinned versions"></div>
-          </div>
+          <div id="checksOut" class="mini" style="white-space:pre-wrap;"></div>
         </div>
       </div>
     </section>
@@ -439,124 +582,136 @@
   <div id="toast" class="toast" aria-live="polite"></div>
 
   <script>
-    const LS_KEY = "idea_lab_v2_state";
-    const nowISO = () => new Date().toISOString();
-    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+    /* ==========================================================
+       Prototype Theater (single-file) | Ignited Word
+       - Build mode: create screens + components + connections
+       - Play mode: navigate flow + log journey + scenario runners
+       - Inspector: edit selected component
+       - Checks: simple a11y + flow validation
+       - Autosave + Export/Import JSON
+       ========================================================== */
 
+    const LS_KEY = "iw_prototype_theater_v1";
+
+    // ---------- DOM ----------
     const el = {
-      seed: document.getElementById("seed"),
-      tone: document.getElementById("tone"),
-      audience: document.getElementById("audience"),
-      length: document.getElementById("length"),
-      lengthLabel: document.getElementById("lengthLabel"),
-      status: document.getElementById("status"),
-
-      surface: document.getElementById("surface"),
+      tabBuild: document.getElementById("tabBuild"),
+      tabPlay: document.getElementById("tabPlay"),
       modePill: document.getElementById("modePill"),
-      draftMeta: document.getElementById("draftMeta"),
+      playMeta: document.getElementById("playMeta"),
 
-      note: document.getElementById("note"),
-      btnAttachNote: document.getElementById("btnAttachNote"),
+      startScreenSelect: document.getElementById("startScreenSelect"),
+      newScreenName: document.getElementById("newScreenName"),
+      btnAddScreen: document.getElementById("btnAddScreen"),
+      btnAddFromTemplate: document.getElementById("btnAddFromTemplate"),
 
-      historyList: document.getElementById("historyList"),
-      pinList: document.getElementById("pinList"),
+      btnAddHeading: document.getElementById("btnAddHeading"),
+      btnAddText: document.getElementById("btnAddText"),
+      btnAddInput: document.getElementById("btnAddInput"),
+      btnAddButton: document.getElementById("btnAddButton"),
+      btnAddAlert: document.getElementById("btnAddAlert"),
+      btnAddDivider: document.getElementById("btnAddDivider"),
 
-      btnClarify: document.getElementById("btnClarify"),
-      btnCompress: document.getElementById("btnCompress"),
-      btnExpand: document.getElementById("btnExpand"),
-      btnQuestions: document.getElementById("btnQuestions"),
-      btnCommit: document.getElementById("btnCommit"),
-      btnReset: document.getElementById("btnReset"),
+      btnDuplicateScreen: document.getElementById("btnDuplicateScreen"),
+      btnDeleteScreen: document.getElementById("btnDeleteScreen"),
 
-      btnPin: document.getElementById("btnPin"),
-      btnCopy: document.getElementById("btnCopy"),
       btnExport: document.getElementById("btnExport"),
+      btnImport: document.getElementById("btnImport"),
+      btnReset: document.getElementById("btnReset"),
+      ioBox: document.getElementById("ioBox"),
 
+      screenSelect: document.getElementById("screenSelect"),
+      canvas: document.getElementById("canvas"),
+      hint: document.getElementById("hint"),
+      selMeta: document.getElementById("selMeta"),
+      selType: document.getElementById("selType"),
+
+      inspectorEmpty: document.getElementById("inspectorEmpty"),
+      inspector: document.getElementById("inspector"),
+      fieldText: document.getElementById("fieldText"),
+      fieldPlaceholderWrap: document.getElementById("fieldPlaceholderWrap"),
+      fieldPlaceholder: document.getElementById("fieldPlaceholder"),
+      fieldAriaWrap: document.getElementById("fieldAriaWrap"),
+      fieldAria: document.getElementById("fieldAria"),
+      fieldGoToWrap: document.getElementById("fieldGoToWrap"),
+      fieldGoTo: document.getElementById("fieldGoTo"),
+      btnMoveUp: document.getElementById("btnMoveUp"),
+      btnMoveDown: document.getElementById("btnMoveDown"),
+      btnDeleteComponent: document.getElementById("btnDeleteComponent"),
+
+      btnRunChecks: document.getElementById("btnRunChecks"),
+      checksOut: document.getElementById("checksOut"),
+
+      btnPinState: document.getElementById("btnPinState"),
+
+      btnStartPlay: document.getElementById("btnStartPlay"),
+      btnStopPlay: document.getElementById("btnStopPlay"),
+      btnClearLog: document.getElementById("btnClearLog"),
+      simLog: document.getElementById("simLog"),
+      simStepTag: document.getElementById("simStepTag"),
+
+      btnScenarioHappy: document.getElementById("btnScenarioHappy"),
+      btnScenarioError: document.getElementById("btnScenarioError"),
+      btnScenarioAlt: document.getElementById("btnScenarioAlt"),
+
+      btnSimPrev: document.getElementById("btnSimPrev"),
+      btnSimNext: document.getElementById("btnSimNext"),
+
+      status: document.getElementById("status"),
+      flowMeta: document.getElementById("flowMeta"),
       toast: document.getElementById("toast"),
     };
 
-    function safeUUID(){
+    // ---------- Utils ----------
+    const nowISO = () => new Date().toISOString();
+    const safeUUID = () => {
       try { return crypto.randomUUID(); } catch { return String(Math.random()).slice(2); }
-    }
+    };
 
     function toast(msg){
       el.toast.textContent = msg;
       el.toast.classList.add("show");
-      window.clearTimeout(toast._t);
-      toast._t = window.setTimeout(()=> el.toast.classList.remove("show"), 1900);
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=> el.toast.classList.remove("show"), 1900);
     }
 
-    function sanitizeSeed(txt){
-      return (txt || "").trim().replace(/\s+\n/g, "\n").replace(/[ \t]+/g, " ");
-    }
+    function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
 
-    function lengthBucket(v){
-      if (v < 25) return { label: "~ short", words: 35 };
-      if (v < 55) return { label: "~ medium", words: 70 };
-      return { label: "~ long", words: 120 };
-    }
-
-    function compressToWords(text, maxWords){
-      const words = String(text).split(/\s+/).filter(Boolean);
-      if (words.length <= maxWords) return text;
-      return words.slice(0, maxWords).join(" ") + "…";
-    }
-
-    function applyTonePrefix(tone){
-      switch(tone){
-        case "warm": return "Warm lens: ";
-        case "bold": return "Bold claim: ";
-        case "playful": return "Playful angle: ";
-        case "formal": return "Formal framing: ";
-        default: return "";
-      }
-    }
-
-    function applyAudienceHint(aud){
-      switch(aud){
-        case "teammate": return "For a teammate: ";
-        case "client": return "For a client: ";
-        case "funder": return "For a funder: ";
-        case "expert": return "For an expert: ";
-        default: return "";
-      }
-    }
-
-    function escapeHTML(str){
-      return String(str || "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
+    // ---------- State ----------
+    // Screen: { id, name, components: [Component] }
+    // Component:
+    //  heading: { id,type:'heading', text }
+    //  text:    { id,type:'text', text }
+    //  input:   { id,type:'input', label, placeholder, aria }
+    //  button:  { id,type:'button', text, goToScreenId, aria }
+    //  alert:   { id,type:'alert', text }
+    //  divider: { id,type:'divider' }
     const state = {
-      seed: "",
-      constraints: { tone:"plain", audience:"general", length:40 },
-      current: {
-        mode: "draft",
-        kind: "",
-        text: "",
-        questions: [],
-        answers: {},
-        note: "",
-        createdAt: null,
-        constraints: null,
+      mode: "build", // build | play
+      startScreenId: null,
+      currentScreenId: null,
+      selectedComponentId: null,
+
+      screens: [],
+      play: {
+        isPlaying: false,
+        currentScreenId: null,
+        step: 0,
+        log: [] // [{t, screenName, action}]
       },
-      history: [],
-      pins: [],
+
       undo: [],
       redo: [],
     };
 
     function snapshot(){
       return JSON.parse(JSON.stringify({
-        seed: state.seed,
-        constraints: state.constraints,
-        current: state.current,
-        history: state.history,
-        pins: state.pins
+        mode: state.mode,
+        startScreenId: state.startScreenId,
+        currentScreenId: state.currentScreenId,
+        selectedComponentId: state.selectedComponentId,
+        screens: state.screens,
+        play: state.play,
       }));
     }
 
@@ -567,13 +722,12 @@
     }
 
     function restore(snap){
-      state.seed = snap.seed || "";
-      state.constraints = snap.constraints || { tone:"plain", audience:"general", length:40 };
-      state.current = snap.current || {
-        mode:"draft", kind:"", text:"", questions:[], answers:{}, note:"", createdAt:null, constraints:null
-      };
-      state.history = snap.history || [];
-      state.pins = snap.pins || [];
+      state.mode = snap.mode || "build";
+      state.startScreenId = snap.startScreenId || null;
+      state.currentScreenId = snap.currentScreenId || null;
+      state.selectedComponentId = snap.selectedComponentId || null;
+      state.screens = snap.screens || [];
+      state.play = snap.play || { isPlaying:false, currentScreenId:null, step:0, log:[] };
       syncUI();
     }
 
@@ -581,8 +735,8 @@
       try{
         localStorage.setItem(LS_KEY, JSON.stringify(snapshot()));
         el.status.textContent = "Autosave: saved";
-        window.clearTimeout(save._t);
-        save._t = window.setTimeout(()=> el.status.textContent = "Autosave: on", 900);
+        clearTimeout(save._t);
+        save._t = setTimeout(()=> el.status.textContent = "Autosave: on", 900);
       }catch{
         el.status.textContent = "Autosave: unavailable";
       }
@@ -597,497 +751,887 @@
       }catch{}
     }
 
-    function t_clarify(seed, c){
-      const prefix = applyAudienceHint(c.audience) + applyTonePrefix(c.tone);
-      const core = seed.replace(/\.$/, "");
-      const why = c.audience === "funder"
-        ? "This matters because it strengthens outcomes and reduces waste."
-        : "This matters because it helps people decide and act with more confidence.";
-      const next = "Next step: pick one concrete test you can run this week.";
-      const draft = `${prefix}${core}.\n\nWhy it matters: ${why}\n${next}`;
-      return compressToWords(draft, lengthBucket(c.length).words);
+    // ---------- Helpers ----------
+    function getScreen(id){ return state.screens.find(s => s.id === id) || null; }
+    function currentScreen(){
+      const sid = state.mode === "play" && state.play.isPlaying ? state.play.currentScreenId : state.currentScreenId;
+      return getScreen(sid);
     }
-
-    function t_compress(seed, c){
-      const prefix = applyAudienceHint(c.audience);
-      const parts = seed.split(/(?<=[.!?])\s+/).filter(Boolean);
-      const base = parts.slice(0, Math.min(2, parts.length)).join(" ");
-      const soWhat = c.audience === "expert"
-        ? "Key point: define the mechanism and test the boundary conditions."
-        : "Key point: name the outcome and the smallest experiment.";
-      const draft = `${prefix}${base}\n\n${soWhat}`;
-      return compressToWords(draft, clamp(lengthBucket(c.length).words - 15, 20, 90));
+    function findComponent(screen, cid){
+      if (!screen) return null;
+      return screen.components.find(c => c.id === cid) || null;
     }
-
-    function t_expand(seed, c){
-      const prefix = applyTonePrefix(c.tone);
-      const prompts = [
-        "What’s the specific context or setting?",
-        "What’s the constraint (time, budget, attention, risk)?",
-        "What’s one example that makes this real?",
-        "What would success look like in one sentence?"
-      ];
-      const audienceAdd = c.audience === "funder"
-        ? "Add: Who benefits, and what changes will be measurable?"
-        : c.audience === "client"
-          ? "Add: What decision will this help you make?"
-          : "Add: What’s the smallest prototype you can build?";
-
-      const draft =
-`${prefix}${seed}
-
-Details to add (fill these in):
-- Context: …
-- Constraint: …
-- Example: …
-- Success statement: …
-
-Guiding questions:
-- ${prompts.join("\n- ")}
-
-${audienceAdd}`;
-
-      return compressToWords(draft, clamp(lengthBucket(c.length).words + 30, 60, 180));
-    }
-
-    function t_reflectionQuestions(c){
-      const qs = [
-        "What are you trying to change, for whom, and by when?",
-        "What’s the smallest version of this that still teaches you something?",
-        "What assumption would embarrass you if it turned out false?",
-        "What would you remove to make this clearer in 10 seconds?"
-      ];
-      if (c.audience === "funder"){
-        qs.unshift("What outcome are you accountable for, and how will you know it moved?");
+    function setMode(mode){
+      state.mode = mode;
+      if (mode === "build"){
+        state.play.isPlaying = false;
+        state.play.currentScreenId = null;
+        state.play.step = 0;
       }
-      return qs;
+      state.selectedComponentId = null;
+      syncUI();
+      save();
     }
 
-    function answersToDraft(seed, c, questions, answersObj){
-      const answered = questions
-        .map((q, i) => ({ q, a: (answersObj[i] || "").trim() }))
-        .filter(x => x.a.length > 0);
-
-      const prefix = applyAudienceHint(c.audience) + applyTonePrefix(c.tone);
-      const intro = seed ? `${prefix}${seed.replace(/\.$/,"")}.` : `${prefix}Draft based on reflection answers.`;
-      const body = answered.map(x => `- ${x.a}`).join("\n");
-      const closing = c.audience === "funder"
-        ? "\n\nProposed test: Identify one indicator, one data source, and one timeline."
-        : "\n\nProposed test: Name one small prototype and one feedback loop.";
-
-      const draft = `${intro}\n\nKey notes:\n${body}${closing}`;
-      return compressToWords(draft, lengthBucket(c.length).words + 40);
+    function ensureAnyScreen(){
+      if (state.screens.length) return true;
+      toast("Create a screen first");
+      return false;
     }
 
-    function getConstraints(){
-      return {
-        tone: el.tone.value,
-        audience: el.audience.value,
-        length: Number(el.length.value)
-      };
-    }
-
-    function setCurrentDraft(kind, text){
-      state.current = {
-        mode: "draft",
-        kind,
-        text: String(text || ""),
-        questions: [],
-        answers: state.current.answers || {},
-        note: state.current.note || "",
-        createdAt: nowISO(),
-        constraints: JSON.parse(JSON.stringify(state.constraints))
-      };
-    }
-
-    function setCurrentReflection(){
-      state.current = {
-        mode: "reflection",
-        kind: "reflection",
-        text: "",
-        questions: t_reflectionQuestions(state.constraints),
-        answers: state.current.answers || {},
-        note: state.current.note || "",
-        createdAt: nowISO(),
-        constraints: JSON.parse(JSON.stringify(state.constraints))
-      };
-    }
-
-    function renderSurface(){
-      const c = state.current;
-      el.modePill.textContent = c.mode === "reflection" ? "Mode: Reflection" : "Mode: Draft";
-      el.draftMeta.textContent = c.createdAt
-        ? `${c.kind || c.mode} • ${new Date(c.createdAt).toLocaleString()}`
-        : "No transform yet.";
-
-      el.note.value = c.note || "";
-
-      if (c.mode === "reflection"){
-        const blocks = c.questions.map((q, i) => {
-          const a = (c.answers && c.answers[i]) ? c.answers[i] : "";
-          return `
-            <div class="qblock">
-              <div class="qtitle">${q}</div>
-              <textarea class="qtextarea" data-qindex="${i}" placeholder="Your response…">${escapeHTML(a)}</textarea>
-            </div>
-          `;
-        }).join("");
-
-        el.surface.innerHTML = `
-          <div class="muted" style="margin-bottom:10px;">
-            Answer any 1–3 questions. Then turn your answers into a draft you can refine.
-          </div>
-          ${blocks}
-          <div class="row" style="margin-top:10px;">
-            <div class="group">
-              <button id="btnAnswersToDraft" class="primary">Turn answers into a draft</button>
-              <button id="btnBackToDraft" class="ghost">Back to draft view</button>
-            </div>
-            <div class="muted">Nothing is sent anywhere. This stays in your browser.</div>
-          </div>
-        `;
-      } else {
-        el.surface.textContent = c.text || "Run a transform (Clarify / Compress / Expand) or enter Reflection mode.";
+    function ensureCurrentScreen(){
+      if (state.currentScreenId && getScreen(state.currentScreenId)) return true;
+      if (state.screens.length){
+        state.currentScreenId = state.screens[0].id;
+        return true;
       }
+      return false;
     }
 
-    function renderList(listEl, items, kind){
-      listEl.innerHTML = "";
-      if (!items.length){
-        const empty = document.createElement("div");
-        empty.className = "muted";
-        empty.textContent = kind === "pins" ? "No pins yet. Pin a keeper draft." : "No committed versions yet.";
-        listEl.appendChild(empty);
+    function updateScreenSelectors(){
+      // screenSelect (canvas)
+      el.screenSelect.innerHTML = "";
+      state.screens.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = s.name;
+        el.screenSelect.appendChild(opt);
+      });
+
+      // startScreenSelect
+      el.startScreenSelect.innerHTML = "";
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = state.screens.length ? "(Select start screen)" : "(Create a screen)";
+      el.startScreenSelect.appendChild(placeholder);
+
+      state.screens.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = s.name;
+        el.startScreenSelect.appendChild(opt);
+      });
+
+      // goTo dropdown (inspector)
+      el.fieldGoTo.innerHTML = "";
+      const none = document.createElement("option");
+      none.value = "";
+      none.textContent = "(No navigation)";
+      el.fieldGoTo.appendChild(none);
+      state.screens.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = s.name;
+        el.fieldGoTo.appendChild(opt);
+      });
+    }
+
+    function updateMeta(){
+      el.flowMeta.textContent = `${state.screens.length} screen${state.screens.length===1?"":"s"}`;
+      el.modePill.textContent = state.mode === "play" ? "Mode: Play" : "Mode: Build";
+      el.playMeta.textContent = state.play.isPlaying ? `Playing: ${getScreen(state.play.currentScreenId)?.name || "?"}` : "Not playing";
+      el.simStepTag.textContent = `Step ${state.play.step || 0}`;
+      const sel = state.selectedComponentId ? state.selectedComponentId.slice(0,8) : "none";
+      el.selMeta.textContent = sel;
+    }
+
+    // ---------- Build: Screen ops ----------
+    function addScreen(name){
+      const clean = (name || "").trim();
+      if (!clean){ toast("Name your screen"); return; }
+      pushUndo();
+
+      const s = { id: safeUUID(), name: clean, components: [] };
+      state.screens.push(s);
+
+      if (!state.currentScreenId) state.currentScreenId = s.id;
+      if (!state.startScreenId) state.startScreenId = s.id;
+
+      syncUI();
+      save();
+      toast("Screen added");
+    }
+
+    function duplicateScreen(){
+      if (!ensureAnyScreen() || !ensureCurrentScreen()) return;
+      const s = getScreen(state.currentScreenId);
+      if (!s) return;
+
+      pushUndo();
+      const copy = JSON.parse(JSON.stringify(s));
+      copy.id = safeUUID();
+      copy.name = s.name + " (copy)";
+      // new ids for components
+      copy.components = copy.components.map(c => ({...c, id: safeUUID()}));
+      state.screens.push(copy);
+      state.currentScreenId = copy.id;
+      syncUI();
+      save();
+      toast("Screen duplicated");
+    }
+
+    function deleteScreen(){
+      if (!ensureAnyScreen() || !ensureCurrentScreen()) return;
+      const sid = state.currentScreenId;
+      if (!sid) return;
+
+      const s = getScreen(sid);
+      if (!s) return;
+
+      pushUndo();
+
+      // Remove screen
+      state.screens = state.screens.filter(x => x.id !== sid);
+
+      // Clean button targets that pointed to it
+      for (const scr of state.screens){
+        for (const c of scr.components){
+          if (c.type === "button" && c.goToScreenId === sid){
+            c.goToScreenId = "";
+          }
+        }
+      }
+
+      // Reset pointers
+      if (state.startScreenId === sid) state.startScreenId = state.screens[0]?.id || null;
+      state.currentScreenId = state.screens[0]?.id || null;
+      state.selectedComponentId = null;
+
+      syncUI();
+      save();
+      toast("Screen deleted");
+    }
+
+    // ---------- Build: Component ops ----------
+    function addComponent(type){
+      if (!ensureAnyScreen() || !ensureCurrentScreen()) return;
+      const s = getScreen(state.currentScreenId);
+      if (!s) return;
+
+      pushUndo();
+
+      const id = safeUUID();
+      let comp = null;
+
+      if (type === "heading") comp = { id, type, text: "Heading" };
+      if (type === "text") comp = { id, type, text: "Short supporting text goes here." };
+      if (type === "input") comp = { id, type, label: "Your name", placeholder: "Type here…", aria: "Input field" };
+      if (type === "button") comp = { id, type, text: "Continue", goToScreenId: "", aria: "Continue button" };
+      if (type === "alert") comp = { id, type, text: "Helpful message or gentle warning." };
+      if (type === "divider") comp = { id, type };
+
+      s.components.push(comp);
+      state.selectedComponentId = id;
+
+      syncUI();
+      save();
+      toast("Component added");
+    }
+
+    function deleteComponent(){
+      if (state.mode !== "build") return;
+      const s = getScreen(state.currentScreenId);
+      if (!s || !state.selectedComponentId) return;
+
+      pushUndo();
+      s.components = s.components.filter(c => c.id !== state.selectedComponentId);
+      state.selectedComponentId = null;
+      syncUI();
+      save();
+      toast("Component deleted");
+    }
+
+    function moveComponent(dir){
+      const s = getScreen(state.currentScreenId);
+      if (!s || !state.selectedComponentId) return;
+
+      const idx = s.components.findIndex(c => c.id === state.selectedComponentId);
+      if (idx < 0) return;
+
+      const next = idx + dir;
+      if (next < 0 || next >= s.components.length) return;
+
+      pushUndo();
+      const tmp = s.components[idx];
+      s.components[idx] = s.components[next];
+      s.components[next] = tmp;
+
+      syncUI();
+      save();
+    }
+
+    // ---------- Inspector ----------
+    function showInspector(comp){
+      if (!comp || state.mode !== "build"){
+        el.inspector.style.display = "none";
+        el.inspectorEmpty.style.display = "block";
+        el.selType.textContent = "none";
         return;
       }
 
-      items.slice().reverse().forEach((v) => {
-        const card = document.createElement("div");
-        card.className = "item";
+      el.inspector.style.display = "grid";
+      el.inspectorEmpty.style.display = "none";
+      el.selType.textContent = comp.type;
 
-        const top = document.createElement("div");
-        top.className = "top";
+      // defaults
+      el.fieldText.value = "";
+      el.fieldPlaceholder.value = "";
+      el.fieldAria.value = "";
+      el.fieldGoTo.value = "";
 
-        const left = document.createElement("div");
-        left.className = "group";
+      // toggle fields
+      const showText = ["heading","text","button","alert"].includes(comp.type);
+      const showPlaceholder = (comp.type === "input");
+      const showAria = (comp.type === "input" || comp.type === "button");
+      const showGoTo = (comp.type === "button");
 
-        const tag1 = document.createElement("span");
-        tag1.className = "tag";
-        tag1.textContent = `${v.kind || "version"} • ${new Date(v.createdAt).toLocaleString()}`;
+      el.fieldPlaceholderWrap.style.display = showPlaceholder ? "grid" : "none";
+      el.fieldAriaWrap.style.display = showAria ? "grid" : "none";
+      el.fieldGoToWrap.style.display = showGoTo ? "grid" : "none";
 
-        const tag2 = document.createElement("span");
-        tag2.className = "tag";
-        tag2.textContent = `${v.constraints.tone}/${v.constraints.audience}/${lengthBucket(v.constraints.length).label.replace("~ ","")}`;
+      if (showText){
+        el.fieldText.value = comp.text || "";
+      } else if (comp.type === "input"){
+        el.fieldText.value = comp.label || "";
+      } else {
+        el.fieldText.value = "";
+      }
 
-        left.appendChild(tag1);
-        left.appendChild(tag2);
+      if (comp.type === "input"){
+        el.fieldPlaceholder.value = comp.placeholder || "";
+        el.fieldAria.value = comp.aria || "";
+      }
+      if (comp.type === "button"){
+        el.fieldGoTo.value = comp.goToScreenId || "";
+        el.fieldAria.value = comp.aria || "";
+      }
+    }
 
-        const actions = document.createElement("div");
-        actions.className = "actions";
+    function commitInspectorChanges(){
+      if (state.mode !== "build") return;
+      const s = getScreen(state.currentScreenId);
+      const comp = findComponent(s, state.selectedComponentId);
+      if (!comp) return;
 
-        const btnLoad = document.createElement("button");
-        btnLoad.textContent = "Load";
-        btnLoad.className = "ghost";
-        btnLoad.addEventListener("click", () => {
-          pushUndo();
-          state.current = {
-            mode: "draft",
-            kind: v.kind,
-            text: v.text,
-            questions: [],
-            answers: state.current.answers || {},
-            note: v.note || "",
-            createdAt: nowISO(),
-            constraints: JSON.parse(JSON.stringify(v.constraints))
-          };
-          state.constraints = JSON.parse(JSON.stringify(v.constraints));
-          syncUI();
-          save();
-          toast("Loaded into current draft");
-        });
+      // small: don’t pushUndo on every keystroke.
+      // We’ll pushUndo on blur to keep it usable.
+      if (comp.type === "heading" || comp.type === "text" || comp.type === "button" || comp.type === "alert"){
+        comp.text = el.fieldText.value;
+      }
+      if (comp.type === "input"){
+        comp.label = el.fieldText.value;
+        comp.placeholder = el.fieldPlaceholder.value;
+        comp.aria = el.fieldAria.value;
+      }
+      if (comp.type === "button"){
+        comp.goToScreenId = el.fieldGoTo.value;
+        comp.aria = el.fieldAria.value;
+      }
+    }
 
-        const btnCopy = document.createElement("button");
-        btnCopy.textContent = "Copy";
-        btnCopy.className = "ghost";
-        btnCopy.addEventListener("click", async () => {
-          await navigator.clipboard.writeText(v.text);
-          toast("Copied");
-        });
+    // ---------- Rendering ----------
+    function renderCanvas(){
+      const s = currentScreen();
+      el.canvas.innerHTML = "";
 
-        const btnDelete = document.createElement("button");
-        btnDelete.textContent = "Delete";
-        btnDelete.className = "danger";
-        btnDelete.addEventListener("click", () => {
-          pushUndo();
-          const arr = kind === "pins" ? state.pins : state.history;
-          const idx = arr.findIndex(x => x.id === v.id);
-          if (idx >= 0) arr.splice(idx, 1);
-          syncUI();
-          save();
-          toast("Deleted");
-        });
+      if (!s){
+        el.canvas.innerHTML = `<div class="pt-card"><h2 class="pt-title">No screen yet</h2><p class="pt-text">Create a screen in Builder to begin.</p></div>`;
+        return;
+      }
 
-        actions.appendChild(btnLoad);
-        actions.appendChild(btnCopy);
-        actions.appendChild(btnDelete);
+      const wrapper = document.createElement("div");
+      wrapper.className = "pt-card";
+      wrapper.setAttribute("data-screen-id", s.id);
 
-        top.appendChild(left);
-        top.appendChild(actions);
+      // Screen heading
+      const h = document.createElement("h2");
+      h.className = "pt-title";
+      h.textContent = s.name;
 
-        const snippet = document.createElement("div");
-        snippet.className = "snippet";
-        snippet.textContent = v.text;
+      const p = document.createElement("p");
+      p.className = "pt-text";
+      p.textContent = state.mode === "play"
+        ? "Play mode: interact with the prototype like a user."
+        : "Build mode: click components to edit them.";
 
-        card.appendChild(top);
-        card.appendChild(snippet);
+      wrapper.appendChild(h);
+      wrapper.appendChild(p);
 
-        if (v.note){
-          const note = document.createElement("div");
-          note.className = "muted";
-          note.textContent = `Note: ${v.note}`;
-          card.appendChild(note);
+      // Components
+      for (const comp of s.components){
+        const node = renderComponent(comp, s.id);
+        wrapper.appendChild(node);
+      }
+
+      el.canvas.appendChild(wrapper);
+    }
+
+    function renderComponent(comp, screenId){
+      const selected = (state.mode === "build" && comp.id === state.selectedComponentId);
+
+      function clickable(node){
+        node.style.outline = selected ? "2px solid rgba(240,81,38,.75)" : "none";
+        node.style.outlineOffset = "3px";
+        node.style.cursor = state.mode === "build" ? "pointer" : "default";
+        node.setAttribute("data-comp-id", comp.id);
+        node.setAttribute("data-screen-id", screenId);
+        return node;
+      }
+
+      if (comp.type === "divider"){
+        const hr = document.createElement("hr");
+        hr.className = "pt-hr";
+        return hr;
+      }
+
+      if (comp.type === "heading"){
+        const t = document.createElement("div");
+        t.style.fontSize = "16px";
+        t.style.fontWeight = "700";
+        t.textContent = comp.text || "Heading";
+        return clickable(t);
+      }
+
+      if (comp.type === "text"){
+        const t = document.createElement("div");
+        t.className = "pt-text";
+        t.style.color = "var(--ink)";
+        t.style.opacity = ".9";
+        t.textContent = comp.text || "";
+        return clickable(t);
+      }
+
+      if (comp.type === "alert"){
+        const a = document.createElement("div");
+        a.className = "pt-alert";
+        a.textContent = comp.text || "";
+        return clickable(a);
+      }
+
+      if (comp.type === "input"){
+        const box = document.createElement("div");
+        box.className = "pt-field";
+        const lab = document.createElement("div");
+        lab.className = "pt-label";
+        lab.textContent = comp.label || "Label";
+
+        const input = document.createElement("input");
+        input.className = "pt-input";
+        input.type = "text";
+        input.placeholder = comp.placeholder || "";
+        input.setAttribute("aria-label", comp.aria || comp.label || "Input");
+        input.disabled = (state.mode === "build"); // build mode: edit in inspector, not here
+        if (state.mode === "play"){
+          input.addEventListener("input", () => {
+            // capture nothing, but keeps it realistic
+          });
         }
 
-        listEl.appendChild(card);
+        box.appendChild(lab);
+        box.appendChild(input);
+        return clickable(box);
+      }
+
+      if (comp.type === "button"){
+        const bar = document.createElement("div");
+        bar.className = "pt-actions";
+        const btn = document.createElement("button");
+        btn.className = "primary";
+        btn.textContent = comp.text || "Button";
+        btn.setAttribute("aria-label", comp.aria || comp.text || "Button");
+
+        if (state.mode === "build"){
+          // do nothing; selection handles it
+        } else if (state.mode === "play"){
+          btn.addEventListener("click", () => {
+            onPlayButton(comp);
+          });
+        }
+
+        bar.appendChild(btn);
+        return clickable(bar);
+      }
+
+      const unknown = document.createElement("div");
+      unknown.className = "pt-text";
+      unknown.textContent = "(unknown component)";
+      return unknown;
+    }
+
+    // ---------- Play mode ----------
+    function startPlay(){
+      if (!ensureAnyScreen()) return;
+      if (!state.startScreenId){
+        state.startScreenId = state.screens[0].id;
+      }
+      pushUndo();
+      state.play.isPlaying = true;
+      state.play.currentScreenId = state.startScreenId;
+      state.play.step = 0;
+      state.play.log = [];
+      state.selectedComponentId = null;
+      state.mode = "play";
+      logStep(`Start → ${getScreen(state.play.currentScreenId)?.name || "?"}`);
+      syncUI();
+      save();
+      toast("Play started");
+    }
+
+    function stopPlay(){
+      pushUndo();
+      state.play.isPlaying = false;
+      state.play.currentScreenId = null;
+      state.play.step = 0;
+      state.mode = "build";
+      syncUI();
+      save();
+      toast("Play stopped");
+    }
+
+    function logStep(action){
+      const s = getScreen(state.play.currentScreenId);
+      state.play.step += 1;
+      state.play.log.push({
+        t: nowISO(),
+        screenName: s?.name || "?",
+        action
       });
+      renderSimLog();
     }
 
-    function syncUI(){
-      el.seed.value = state.seed;
-      el.tone.value = state.constraints.tone;
-      el.audience.value = state.constraints.audience;
-      el.length.value = state.constraints.length;
-      el.lengthLabel.textContent = lengthBucket(state.constraints.length).label;
-
-      renderSurface();
-      renderList(el.historyList, state.history, "history");
-      renderList(el.pinList, state.pins, "pins");
-    }
-
-    function ensureSeed(){
-      const seed = sanitizeSeed(el.seed.value);
-      state.seed = seed;
-      if (!seed){
-        toast("Add a seed idea first");
-        return false;
-      }
-      return true;
-    }
-
-    function doDraftTransform(kind){
-      if (!ensureSeed()) return;
-      state.constraints = getConstraints();
-
-      const seed = state.seed;
-      const c = state.constraints;
-
-      let out = "";
-      if (kind === "clarify") out = t_clarify(seed, c);
-      if (kind === "compress") out = t_compress(seed, c);
-      if (kind === "expand") out = t_expand(seed, c);
-
-      pushUndo();
-      setCurrentDraft(kind, out);
-      syncUI();
-      save();
-      toast("Draft updated");
-    }
-
-    function enterReflection(){
-      if (!ensureSeed()) return;
-      state.constraints = getConstraints();
-      pushUndo();
-      setCurrentReflection();
-      syncUI();
-      save();
-      toast("Reflection mode");
-    }
-
-    function collectReflectionAnswers(){
-      const answers = {};
-      const nodes = el.surface.querySelectorAll("textarea[data-qindex]");
-      nodes.forEach(n => { answers[n.dataset.qindex] = n.value; });
-      state.current.answers = answers;
-    }
-
-    function reflectionToDraft(){
-      if (!ensureSeed()) return;
-
-      state.constraints = getConstraints();
-      collectReflectionAnswers();
-
-      const ans = state.current.answers || {};
-      const anyAnswered = Object.values(ans).some(v => String(v).trim().length > 0);
-      if (!anyAnswered){
-        toast("Answer at least one question");
+    function renderSimLog(){
+      if (!state.play.log.length){
+        el.simLog.textContent = "No journey yet. Start Play, then click around.\n";
+        el.simStepTag.textContent = "Step 0";
         return;
       }
-
-      const draft = answersToDraft(state.seed, state.constraints, state.current.questions || [], ans);
-
-      pushUndo();
-      setCurrentDraft("draft-from-reflection", draft);
-      syncUI();
-      save();
-      toast("Draft created from answers");
-    }
-
-    function commitVersion(){
-      if (state.current.mode !== "draft" || !state.current.text){
-        toast("Commit works on a draft. Create or load a draft first.");
-        return;
-      }
-      pushUndo();
-      state.history.push({
-        id: safeUUID(),
-        kind: state.current.kind || "draft",
-        text: state.current.text,
-        note: state.current.note || "",
-        createdAt: nowISO(),
-        constraints: JSON.parse(JSON.stringify(state.constraints))
+      const lines = state.play.log.map((x, i) => {
+        const n = String(i+1).padStart(2,"0");
+        return `${n}. [${x.screenName}] ${x.action}`;
       });
-      syncUI();
-      save();
-      toast("Committed to history");
+      el.simLog.textContent = lines.join("\n");
+      el.simStepTag.textContent = `Step ${state.play.step}`;
     }
 
-    function pinCurrent(){
-      if (state.current.mode !== "draft" || !state.current.text){
-        toast("Pin works on a draft. Create or load a draft first.");
+    function onPlayButton(comp){
+      const target = comp.goToScreenId;
+      const label = comp.text || "Button";
+
+      if (!target){
+        logStep(`Clicked "${label}" (no target)`);
+        toast("This button has no target screen");
         return;
       }
-      pushUndo();
-      const exists = state.pins.some(p => p.text === state.current.text);
-      if (!exists){
-        state.pins.push({
-          id: safeUUID(),
-          kind: "pin",
-          text: state.current.text,
-          note: state.current.note || "",
-          createdAt: nowISO(),
-          constraints: JSON.parse(JSON.stringify(state.constraints))
-        });
-        toast("Pinned");
+      const next = getScreen(target);
+      if (!next){
+        logStep(`Clicked "${label}" (missing target)`);
+        toast("Target screen missing");
+        return;
+      }
+
+      state.play.currentScreenId = next.id;
+      logStep(`Clicked "${label}" → ${next.name}`);
+      syncUI();
+      save();
+    }
+
+    function jumpLogStep(dir){
+      // Simple viewer: navigate the log list (doesn't rewind state; it's a "theater replay" lens).
+      const len = state.play.log.length;
+      if (!len){ toast("No log yet"); return; }
+      // We'll track a "cursor" in playMeta tag text
+      const match = (el.playMeta.textContent || "").match(/Viewing (\d+)\/(\d+)/);
+      let idx = match ? (parseInt(match[1],10)-1) : (len-1);
+      idx = clamp(idx + dir, 0, len-1);
+      el.playMeta.textContent = `Viewing ${idx+1}/${len}`;
+      // Highlight the line by re-rendering with marker
+      const lines = state.play.log.map((x, i) => {
+        const n = String(i+1).padStart(2,"0");
+        const mark = (i === idx) ? " ▶" : "";
+        return `${n}. [${x.screenName}] ${x.action}${mark}`;
+      });
+      el.simLog.textContent = lines.join("\n");
+      toast(`Viewing step ${idx+1}`);
+    }
+
+    // ---------- Checks ----------
+    function runChecks(){
+      const issues = [];
+      const warnings = [];
+      const info = [];
+
+      if (!state.screens.length){
+        issues.push("No screens exist.");
       } else {
-        toast("Already pinned");
+        if (!state.startScreenId) warnings.push("Start screen not set.");
+        else if (!getScreen(state.startScreenId)) issues.push("Start screen points to a missing screen.");
+
+        // per-screen
+        for (const s of state.screens){
+          if (!s.name.trim()) issues.push(`A screen has an empty name (id ${s.id.slice(0,6)}).`);
+
+          // accessibility checks
+          for (const c of s.components){
+            if (c.type === "input"){
+              if (!String(c.aria||"").trim()) warnings.push(`Input on "${s.name}" missing ARIA label.`);
+              if (!String(c.label||"").trim()) warnings.push(`Input on "${s.name}" missing label text.`);
+            }
+            if (c.type === "button"){
+              if (!String(c.aria||"").trim()) warnings.push(`Button "${c.text||"(unnamed)"}" on "${s.name}" missing ARIA label.`);
+              if (!String(c.text||"").trim()) warnings.push(`A button on "${s.name}" has no visible text.`);
+              if (c.goToScreenId && !getScreen(c.goToScreenId)) issues.push(`Button "${c.text||"(unnamed)"}" on "${s.name}" points to missing screen.`);
+            }
+          }
+
+          // flow check: dead-end screen (no buttons with targets)
+          const hasNav = s.components.some(c => c.type === "button" && String(c.goToScreenId||"").trim());
+          if (!hasNav){
+            info.push(`"${s.name}" has no navigation buttons (could be intentional).`);
+          }
+        }
       }
-      syncUI();
-      save();
+
+      const out = [];
+      out.push(`Checks run: ${new Date().toLocaleString()}`);
+      out.push("");
+
+      if (issues.length){
+        out.push("Issues (fix these):");
+        for (const x of issues) out.push(`- ❌ ${x}`);
+        out.push("");
+      } else {
+        out.push("Issues: none ✅");
+        out.push("");
+      }
+
+      if (warnings.length){
+        out.push("Warnings (consider):");
+        for (const x of warnings) out.push(`- ⚠️ ${x}`);
+        out.push("");
+      } else {
+        out.push("Warnings: none");
+        out.push("");
+      }
+
+      if (info.length){
+        out.push("Notes:");
+        for (const x of info) out.push(`- ℹ️ ${x}`);
+      } else {
+        out.push("Notes: none");
+      }
+
+      el.checksOut.textContent = out.join("\n");
+      toast("Checks complete");
     }
 
-    async function copyCurrent(){
-      if (state.current.mode !== "draft" || !state.current.text){
-        toast("Nothing to copy");
-        return;
-      }
-      await navigator.clipboard.writeText(state.current.text);
-      toast("Copied");
-    }
-
-    async function exportBundle(){
-      const bundle = {
+    // ---------- Export/Import ----------
+    function exportJSON(){
+      const payload = {
         exportedAt: nowISO(),
-        seed: state.seed,
-        constraints: state.constraints,
-        current: state.current,
-        history: state.history,
-        pins: state.pins
+        version: "iw-prototype-theater-v1",
+        startScreenId: state.startScreenId,
+        screens: state.screens
       };
-
-      const text =
-`IDEA LAB EXPORT
-Exported: ${bundle.exportedAt}
-
-SEED
-${bundle.seed}
-
-CONSTRAINTS
-- Tone: ${bundle.constraints.tone}
-- Audience: ${bundle.constraints.audience}
-- Length: ${lengthBucket(bundle.constraints.length).label}
-
-CURRENT
-- Mode: ${bundle.current.mode}
-- Kind: ${bundle.current.kind}
-- Note: ${bundle.current.note || "(none)"}
-
-DRAFT TEXT
-${bundle.current.text || "(none)"}
-
-REFLECTION (if any)
-${(bundle.current.questions || []).map((q,i)=>`Q${i+1}: ${q}\nA: ${(bundle.current.answers && bundle.current.answers[i]) ? bundle.current.answers[i] : ""}\n`).join("\n")}
-
-HISTORY (${bundle.history.length})
-${bundle.history.map((v,i)=>`[${i+1}] ${v.kind} • ${new Date(v.createdAt).toLocaleString()}\nNote: ${v.note || "(none)"}\n${v.text}\n`).join("\n")}
-
-PINS (${bundle.pins.length})
-${bundle.pins.map((v,i)=>`[${i+1}] • ${new Date(v.createdAt).toLocaleString()}\nNote: ${v.note || "(none)"}\n${v.text}\n`).join("\n")}
-`;
-      await navigator.clipboard.writeText(text);
-      toast("Export copied to clipboard");
+      el.ioBox.value = JSON.stringify(payload, null, 2);
+      toast("Export ready (copied to box)");
     }
 
-    function attachNote(){
+    function importJSON(){
+      const raw = (el.ioBox.value || "").trim();
+      if (!raw){ toast("Paste JSON into the box first"); return; }
+      let data;
+      try { data = JSON.parse(raw); }
+      catch { toast("That JSON couldn't be parsed"); return; }
+
+      if (!data || !Array.isArray(data.screens)){
+        toast("JSON missing 'screens'"); return;
+      }
+
       pushUndo();
-      state.current.note = (el.note.value || "").trim();
+      state.screens = data.screens;
+      state.startScreenId = data.startScreenId || data.startScreenId || data.startScreenId;
+      state.startScreenId = data.startScreenId || data.startScreenId || data.startScreenId; // harmless redundancy
+      state.startScreenId = data.startScreenId || data.startScreenId || state.screens[0]?.id || null;
+      state.currentScreenId = state.screens[0]?.id || null;
+      state.selectedComponentId = null;
+      state.play = { isPlaying:false, currentScreenId:null, step:0, log:[] };
+      state.mode = "build";
+
       syncUI();
       save();
-      toast("Note attached to current");
+      toast("Imported");
     }
 
     function resetAll(){
       pushUndo();
-      state.seed = "";
-      state.constraints = { tone:"plain", audience:"general", length:40 };
-      state.current = { mode:"draft", kind:"", text:"", questions:[], answers:{}, note:"", createdAt:null, constraints:null };
-      state.history = [];
-      state.pins = [];
+      state.mode = "build";
+      state.startScreenId = null;
+      state.currentScreenId = null;
+      state.selectedComponentId = null;
+      state.screens = [];
+      state.play = { isPlaying:false, currentScreenId:null, step:0, log:[] };
+      el.ioBox.value = "";
+      el.checksOut.textContent = "";
       syncUI();
       save();
       toast("Reset complete");
     }
 
-    // Wiring
-    el.seed.addEventListener("input", () => { state.seed = sanitizeSeed(el.seed.value); save(); });
-    el.tone.addEventListener("change", () => { state.constraints = getConstraints(); syncUI(); save(); });
-    el.audience.addEventListener("change", () => { state.constraints = getConstraints(); syncUI(); save(); });
-    el.length.addEventListener("input", () => { state.constraints = getConstraints(); syncUI(); save(); });
+    // ---------- Template ----------
+    function addTemplateFlow(){
+      pushUndo();
+      const a = { id: safeUUID(), name: "Welcome", components: [
+        { id: safeUUID(), type:"text", text:"Welcome. This is a tiny flow you can reshape." },
+        { id: safeUUID(), type:"input", label:"Your email", placeholder:"name@domain.com", aria:"Email address" },
+        { id: safeUUID(), type:"button", text:"Continue", goToScreenId:"", aria:"Continue" },
+      ]};
+      const b = { id: safeUUID(), name: "Confirm", components: [
+        { id: safeUUID(), type:"alert", text:"Thanks. What should happen next?" },
+        { id: safeUUID(), type:"button", text:"Finish", goToScreenId:"", aria:"Finish" },
+      ]};
 
-    el.btnClarify.addEventListener("click", () => doDraftTransform("clarify"));
-    el.btnCompress.addEventListener("click", () => doDraftTransform("compress"));
-    el.btnExpand.addEventListener("click", () => doDraftTransform("expand"));
-    el.btnQuestions.addEventListener("click", () => enterReflection());
+      // link Continue → Confirm
+      a.components.find(x=>x.type==="button").goToScreenId = b.id;
 
-    el.btnCommit.addEventListener("click", () => commitVersion());
-    el.btnReset.addEventListener("click", () => resetAll());
+      state.screens.push(a,b);
+      state.currentScreenId = a.id;
+      state.startScreenId = a.id;
+      state.selectedComponentId = null;
 
-    el.btnPin.addEventListener("click", () => pinCurrent());
-    el.btnCopy.addEventListener("click", () => copyCurrent());
-    el.btnExport.addEventListener("click", () => exportBundle());
-    el.btnAttachNote.addEventListener("click", () => attachNote());
+      syncUI();
+      save();
+      toast("Template added");
+    }
 
-    document.addEventListener("click", (e) => {
-      if (e.target && e.target.id === "btnAnswersToDraft"){
-        reflectionToDraft();
+    // ---------- Snapshot note ----------
+    function snapshotNote(){
+      const s = currentScreen();
+      if (!s){ toast("Nothing to snapshot"); return; }
+      const lines = [];
+      lines.push(`Snapshot • ${new Date().toLocaleString()}`);
+      lines.push(`Mode: ${state.mode}`);
+      lines.push(`Start: ${getScreen(state.startScreenId)?.name || "(none)"}`);
+      lines.push(`Current: ${s.name}`);
+      lines.push(`Components: ${s.components.length}`);
+      lines.push("");
+      lines.push("Prompt: What will you test next?");
+      el.ioBox.value = lines.join("\n");
+      toast("Snapshot note created");
+    }
+
+    // ---------- Sync UI ----------
+    function syncUI(){
+      updateScreenSelectors();
+      updateMeta();
+
+      // Tabs
+      el.tabBuild.classList.toggle("active", state.mode === "build");
+      el.tabPlay.classList.toggle("active", state.mode === "play");
+      el.tabBuild.setAttribute("aria-selected", state.mode === "build" ? "true" : "false");
+      el.tabPlay.setAttribute("aria-selected", state.mode === "play" ? "true" : "false");
+
+      // Start selector
+      el.startScreenSelect.value = state.startScreenId || "";
+
+      // Screen selector
+      if (!ensureCurrentScreen()){
+        el.screenSelect.innerHTML = `<option value="">(no screens)</option>`;
+      } else {
+        el.screenSelect.value = state.mode === "play" && state.play.isPlaying ? (state.play.currentScreenId || "") : (state.currentScreenId || "");
       }
-      if (e.target && e.target.id === "btnBackToDraft"){
-        pushUndo();
-        state.current.mode = "draft";
-        syncUI();
-        save();
-        toast("Draft view");
+
+      // Canvas hint
+      el.hint.textContent = state.mode === "play"
+        ? "Play: click buttons to navigate. Builder is locked."
+        : "Build: click a component to edit it. Add buttons to connect screens.";
+
+      // Render
+      renderCanvas();
+
+      // Inspector
+      const s = getScreen(state.currentScreenId);
+      const comp = (state.mode === "build") ? findComponent(s, state.selectedComponentId) : null;
+      showInspector(comp);
+
+      // Simulation log
+      renderSimLog();
+
+      // Meta viewer
+      if (!state.play.isPlaying && state.mode !== "play"){
+        // keep default playMeta already set
       }
+    }
+
+    // ---------- Events ----------
+    // Mode tabs
+    el.tabBuild.addEventListener("click", () => { pushUndo(); setMode("build"); toast("Build mode"); });
+    el.tabPlay.addEventListener("click", () => {
+      // Don't auto-start: Play mode can be started explicitly
+      pushUndo();
+      state.mode = "play";
+      state.selectedComponentId = null;
+      syncUI(); save();
+      toast("Play mode (press Start)");
     });
 
-    document.addEventListener("input", (e) => {
-      if (e.target && e.target.matches("textarea[data-qindex]")){
-        const idx = e.target.dataset.qindex;
-        state.current.answers = state.current.answers || {};
-        state.current.answers[idx] = e.target.value;
-        save();
-      }
+    // Screens
+    el.btnAddScreen.addEventListener("click", () => addScreen(el.newScreenName.value));
+    el.newScreenName.addEventListener("keydown", (e) => {
+      if (e.key === "Enter"){ e.preventDefault(); addScreen(el.newScreenName.value); }
+    });
+    el.btnAddFromTemplate.addEventListener("click", () => addTemplateFlow());
+
+    el.startScreenSelect.addEventListener("change", () => {
+      pushUndo();
+      state.startScreenId = el.startScreenSelect.value || null;
+      syncUI(); save();
+      toast("Start screen set");
     });
 
+    el.screenSelect.addEventListener("change", () => {
+      const sid = el.screenSelect.value;
+      if (!sid) return;
+      pushUndo();
+      if (state.mode === "play" && state.play.isPlaying){
+        state.play.currentScreenId = sid;
+        logStep(`Jumped to ${getScreen(sid)?.name || "?"}`);
+      } else {
+        state.currentScreenId = sid;
+      }
+      state.selectedComponentId = null;
+      syncUI(); save();
+    });
+
+    el.btnDuplicateScreen.addEventListener("click", () => duplicateScreen());
+    el.btnDeleteScreen.addEventListener("click", () => deleteScreen());
+
+    // Add components
+    el.btnAddHeading.addEventListener("click", () => addComponent("heading"));
+    el.btnAddText.addEventListener("click", () => addComponent("text"));
+    el.btnAddInput.addEventListener("click", () => addComponent("input"));
+    el.btnAddButton.addEventListener("click", () => addComponent("button"));
+    el.btnAddAlert.addEventListener("click", () => addComponent("alert"));
+    el.btnAddDivider.addEventListener("click", () => addComponent("divider"));
+
+    // Inspector edits
+    const inspectorFields = [el.fieldText, el.fieldPlaceholder, el.fieldAria, el.fieldGoTo];
+    inspectorFields.forEach(f => {
+      f.addEventListener("input", () => {
+        if (state.mode !== "build") return;
+        commitInspectorChanges();
+        renderCanvas();
+        save();
+      });
+      f.addEventListener("focus", () => {
+        // pushUndo once per edit session
+        if (state.mode !== "build") return;
+        if (!f._editArmed){
+          pushUndo();
+          f._editArmed = true;
+          setTimeout(()=> f._editArmed = false, 800); // debounce
+        }
+      });
+    });
+
+    el.btnMoveUp.addEventListener("click", () => moveComponent(-1));
+    el.btnMoveDown.addEventListener("click", () => moveComponent(1));
+    el.btnDeleteComponent.addEventListener("click", () => deleteComponent());
+
+    // Canvas click: select component in build mode
+    el.canvas.addEventListener("click", (e) => {
+      if (state.mode !== "build") return;
+      const compEl = e.target.closest("[data-comp-id]");
+      if (!compEl) return;
+
+      const cid = compEl.getAttribute("data-comp-id");
+      if (!cid) return;
+
+      pushUndo();
+      state.selectedComponentId = cid;
+      syncUI();
+      save();
+    });
+
+    // Simulation controls
+    el.btnStartPlay.addEventListener("click", () => startPlay());
+    el.btnStopPlay.addEventListener("click", () => stopPlay());
+    el.btnClearLog.addEventListener("click", () => {
+      pushUndo();
+      state.play.log = [];
+      state.play.step = 0;
+      renderSimLog();
+      save();
+      toast("Log cleared");
+    });
+
+    // Scenarios (guided clicks)
+    function runScenario(kind){
+      if (!state.play.isPlaying){
+        startPlay();
+      }
+      const start = getScreen(state.play.currentScreenId);
+      if (!start){ toast("No start screen"); return; }
+
+      // simple heuristics
+      const act = (msg) => { logStep(msg); };
+
+      if (kind === "happy"){
+        act("Scenario: Happy path");
+        // click first button with target repeatedly up to 4 hops
+        for (let i=0;i<4;i++){
+          const s = getScreen(state.play.currentScreenId);
+          const btn = s?.components.find(c => c.type === "button" && c.goToScreenId) || null;
+          if (!btn){ act("No further navigation"); break; }
+          onPlayButton(btn);
+        }
+      }
+
+      if (kind === "error"){
+        act("Scenario: Error state");
+        // look for an input missing aria or label, else just click non-target button
+        const s = getScreen(state.play.currentScreenId);
+        const badInput = s?.components.find(c => c.type==="input" && (!String(c.aria||"").trim() || !String(c.label||"").trim()));
+        if (badInput) act(`Noted: input missing accessibility label on "${s.name}"`);
+        const deadBtn = s?.components.find(c => c.type==="button" && !String(c.goToScreenId||"").trim());
+        if (deadBtn){
+          onPlayButton(deadBtn);
+        } else {
+          act("No obvious error-state button here (try running checks).");
+        }
+      }
+
+      if (kind === "alt"){
+        act("Scenario: Alternate route");
+        // click second available nav button if exists; else click first
+        const s = getScreen(state.play.currentScreenId);
+        const navButtons = (s?.components || []).filter(c => c.type==="button");
+        const pick = navButtons[1] || navButtons[0];
+        if (!pick){ act("No buttons to try"); }
+        else onPlayButton(pick);
+      }
+
+      syncUI();
+      save();
+    }
+
+    el.btnScenarioHappy.addEventListener("click", ()=> runScenario("happy"));
+    el.btnScenarioError.addEventListener("click", ()=> runScenario("error"));
+    el.btnScenarioAlt.addEventListener("click", ()=> runScenario("alt"));
+
+    // Checks + notes
+    el.btnRunChecks.addEventListener("click", ()=> runChecks());
+    el.btnPinState.addEventListener("click", ()=> snapshotNote());
+
+    // Export/Import/Reset
+    el.btnExport.addEventListener("click", ()=> exportJSON());
+    el.btnImport.addEventListener("click", ()=> importJSON());
+    el.btnReset.addEventListener("click", ()=> resetAll());
+
+    // Log viewer (prev/next)
+    el.btnSimPrev.addEventListener("click", ()=> jumpLogStep(-1));
+    el.btnSimNext.addEventListener("click", ()=> jumpLogStep(1));
+
+    // Undo/redo
     document.addEventListener("keydown", (e) => {
       const isMac = navigator.platform.toUpperCase().includes("MAC");
       const mod = isMac ? e.metaKey : e.ctrlKey;
@@ -1114,9 +1658,26 @@ ${bundle.pins.map((v,i)=>`[${i+1}] • ${new Date(v.createdAt).toLocaleString()}
       }
     });
 
-    // Boot
+    // ---------- Boot ----------
     load();
+
+    // If nothing loaded, seed a minimal starting point to reduce confusion
+    if (!state.screens.length){
+      state.screens = [{
+        id: safeUUID(),
+        name: "Welcome",
+        components: [
+          { id: safeUUID(), type:"text", text:"Create a second screen, then add a button and set its target." },
+          { id: safeUUID(), type:"button", text:"Continue", goToScreenId:"", aria:"Continue" }
+        ]
+      }];
+      state.currentScreenId = state.screens[0].id;
+      state.startScreenId = state.screens[0].id;
+      save();
+    }
+
     syncUI();
+    renderSimLog();
   </script>
 </body>
 </html>
